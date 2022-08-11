@@ -91,6 +91,7 @@ contract Auction{
 
         fee = (winningBid / 100) * 5;
         earnings  = winningBid - fee;
+        winningBid = 0;
         
         //Send the winning bid minus the dev fee to the stakers
         (bool sent, bytes memory data) = stakeContract.call{value:earnings}("");
@@ -98,6 +99,9 @@ contract Auction{
 
         (bool sent2, bytes memory data2) = seller.call{value:fee}("");
         require(sent2,"Failed to send winning bid to stake contract");
+
+        earnings = 0;
+        fee = 0;
 
         emit End(winningBidder,winningBid);
     }

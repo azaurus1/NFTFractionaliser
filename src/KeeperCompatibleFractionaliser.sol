@@ -91,6 +91,14 @@ contract KeeperCompatibleFractionaliser is ERC20, Ownable, ERC20Permit, ERC721Ho
         earnings = 0;
     }
 
+    function retrieveDevFee(address _to) public onlyOwner{
+        require(address(this).balance > 0, "No dev fees");
+        uint256 devFees = address(this).balance;
+
+        (bool sent, bytes memory data) = _to.call{value:devFees}("");
+        require(sent,"Failed to send Dev Fees");
+    }
+
     function checkUpkeep(bytes calldata ) external view override returns (bool upkeepNeeded, bytes memory) {
         upkeepNeeded = (block.timestamp > currentAuction.endDate()) ;
     }
@@ -103,5 +111,7 @@ contract KeeperCompatibleFractionaliser is ERC20, Ownable, ERC20Permit, ERC721Ho
             startAuction();
         }
     }
+
+    receive() payable external {}
 
 }

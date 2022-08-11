@@ -20,7 +20,7 @@ are distributed evenly amongst a array of initial addresses.
 The Stake contract allows holders of the FNFT token to stake their tokens, without time limit, 
 and receive rewards which are provided from the auction contracts. 
 
-Every day, the Fractionaliser mints 1% of its initial supply, creates and auction contract,and transfers those newly minted FNFT tokens to it, the Auction is an implementation of an english auction, starting at 0.1ETH as the initial price. On a successful auction,
+Every day, the Fractionaliser mints 1% of its initial supply, creates an auction contract,and transfers those newly minted FNFT tokens to it, the Auction is an implementation of an english auction, starting at 0.1ETH as the initial price. On a successful auction,
 the bidder receives the newly minted FNFT tokens, and the ETH earned minus a 5% dev fee is sent to the Stake contract.
 
 Once the current auction in the Fractionaliser is set to ended, the Fractionaliser will request the stake contract to disburse the earnings to each of the stakers 
