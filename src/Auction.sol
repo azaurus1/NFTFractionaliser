@@ -17,6 +17,8 @@ contract Auction{
     address payable public seller;
     address public owner;
     uint256 public endDate;
+    uint256 public fee;
+    uint256 public earnings;
     bool public started;
     bool public ended;
 
@@ -87,8 +89,15 @@ contract Auction{
             //token.transferFrom(address(this), seller, amount);
         }
 
-        (bool sent, bytes memory data) = stakeContract.call{value:winningBid}("");
+        fee = (winningBid / 100) * 5;
+        earnings  = winningBid - fee;
+        
+        //Send the winning bid minus the dev fee to the stakers
+        (bool sent, bytes memory data) = stakeContract.call{value:earnings}("");
         require(sent,"Failed to send winning bid to stake contract");
+
+        (bool sent2, bytes memory data2) = seller.call{value:fee}("");
+        require(sent2,"Failed to send winning bid to stake contract");
 
         emit End(winningBidder,winningBid);
     }

@@ -23,7 +23,7 @@ contract Stake is Ownable{
         userIndex = 0;
     }
 
-    function setRewards(uint256 _amount) public {
+    function setRewards(uint256 _amount) public onlyOwner{
         require(_amount > 0, "Cannot set the rewards to 0");
         rewards += _amount;
     }

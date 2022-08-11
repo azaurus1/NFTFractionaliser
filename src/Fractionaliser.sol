@@ -82,4 +82,14 @@ contract Fractionaliser is ERC20, Ownable, ERC20Permit, ERC721Holder {
         earnings = 0;
     }
 
+    function retrieveDevFee(address _to) public onlyOwner{
+        require(address(this).balance > 0, "No dev fees");
+        uint256 devFees = address(this).balance;
+
+        (bool sent, bytes memory data) = _to.call{value:devFees}("");
+        require(sent,"Failed to send Dev Fees");
+    }
+
+    receive() payable external {}
+
 }
