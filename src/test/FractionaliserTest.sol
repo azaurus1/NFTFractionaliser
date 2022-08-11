@@ -3,30 +3,33 @@ pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
 import "forge-std/Vm.sol";
+import "forge-std/console.sol";
 import "../Fractionaliser.sol";
 import "../MyNFT.sol";
+import "../Stake.sol";
 
 contract FractionaliserTest is DSTest {
-    Fractionaliser fractionaliser = new Fractionaliser();
-    MyNFT NFT = new MyNFT();
-    Vm vm ;
+
+    Fractionaliser public fractionaliser;
+    MyNFT public Nft;
+    Stake public stake;
+    
+    Vm vm = Vm(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
     function setUp() public {
+        fractionaliser = new Fractionaliser();
+        Nft = new MyNFT();
+        Stake = new Stake();
     }
 
     //Test Fractionaliser Bools
-    function testInitialised() public {
-        assertTrue(!fractionaliser.initialised());
-    }
+    //function testInitialised() public {
+    //    assertTrue(!fractionaliser.initialised());
+    //}
     function testSellable() public {
         assertTrue(!fractionaliser.sellable());
     }
 
     //Test Fractionaliser Functions
-    function testInitialise() public {
-        address[] memory addressArray;
-        addressArray[1] = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
-        fractionaliser.initialise(address(NFT), 1, 1e18, addressArray);
-    }
     function testMakeSellable() public {
         fractionaliser.makeSellable();
         assertTrue(fractionaliser.sellable());
@@ -34,8 +37,8 @@ contract FractionaliserTest is DSTest {
 
     //Test NFT functions
     function testNFTMint() public {
-        NFT.safeMint(address(1),1);
-        assertEq(NFT.ownerOf(1), address(1));
+        Nft.safeMint(address(1),1);
+        assertEq(Nft.ownerOf(1), address(1));
     }
     
 }
