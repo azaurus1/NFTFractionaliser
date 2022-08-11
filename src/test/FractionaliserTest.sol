@@ -18,7 +18,6 @@ contract FractionaliserTest is DSTest {
     function setUp() public {
         fractionaliser = new Fractionaliser();
         Nft = new MyNFT();
-        Stake = new Stake();
     }
 
     //Test Fractionaliser Bools
