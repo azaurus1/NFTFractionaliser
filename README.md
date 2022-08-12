@@ -44,3 +44,14 @@ will need to be run either manually by and operator, or can be automated using a
 9. on the Fractionaliser contract, use the startAuction function, this will start the currentAuction, setting its endDate to block.timestamp = 24 hours
 10. the Fractionaliser system is now set up, automation can be set up with a seperate web3 Python or Javascript application to automate checking auction status.
 
+## Tests
+Tests were written to be used with forge,foundry's testing framework.
+
+To run tests on a machine with foundry installed, simply open a terminal in the project directory and run: forge test.
+
+Below is an example of a test run including the gas report:
+![Screenshot from 2022-08-12 10-15-35](https://user-images.githubusercontent.com/59070507/184263855-5bfe101c-be5a-4bb0-b0ef-729a718f5ef7.png)
+
+testInitialise and testCannotRetrieveDevFees include variable fuzzing.
+
+
