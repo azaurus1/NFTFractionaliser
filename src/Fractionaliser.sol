@@ -60,21 +60,26 @@ contract Fractionaliser is ERC20, Ownable, ERC20Permit, ERC721Holder {
     }
 
     function createAuction() public onlyOwner{
+        require(address(stakeContract)!=address(0),"Stake contract must be set");
         currentAuction = new Auction(address(this),((initialSupply/100)*1),100000000000000000,address(stakeContract),owner());
         _mint(address(this),((initialSupply/100)*1));
         this.approve(address(currentAuction),((initialSupply/100)*1));
     }
     function startAuction() public onlyOwner {
+        require(address(currentAuction)!=address(0),"Current auction contract must be set");
         require(address(stakeContract)!=address(0),"Stake contract must be set");
         currentAuction._startAuction();
 
     }
     function endAuction() public onlyOwner{
+        require(address(currentAuction)!=address(0),"Current auction contract must be set");
+        require(currentAuction.started(),"Current auction contract has not started");
         currentAuction.end();
     }
 
 
     function sendRewards() public onlyOwner{
+        require(address(stakeContract) != address(0),"Stake contract not set");
         //_mint(address(stakeContract),(initialSupply/100)*1);
         earnings = currentAuction.winningBid();
         stakeContract.setRewards(earnings);
